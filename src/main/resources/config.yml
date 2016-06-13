@@ -1,0 +1,5 @@
+shareXP: true
+shareDistance: 20
+fullPartyBonusPct: 10.0
+teleportAllowed: true
+invitationDuration: 30
