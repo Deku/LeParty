@@ -45,6 +45,7 @@ public class PartyGUI {
 			}
 			
 			if (promote && p != player && party.getLeaderID().equals(player.getUniqueId())) {
+				lore.add(" ");
 				lore.add("" + ChatColor.GOLD + ChatColor.ITALIC + "Shift + Click derecho" + ChatColor.RESET + ChatColor.GOLD +" para entregar lider");
 			}
 
@@ -68,10 +69,11 @@ public class PartyGUI {
 	public static ItemStack PartyChest(Player p, Party party) {
 		ItemStack item = new ItemStack(Material.CHEST);
 		ItemMeta meta = item.getItemMeta();
+		meta.setDisplayName(ChatColor.GOLD + "Cofre del grupo");
 
 		List<String> lore = new ArrayList<String>();
 		lore.add(ChatColor.GRAY + "- " + ChatColor.WHITE + "Items compartidos");
-		lore.add(ChatColor.WHITE + "    por el grupo.");
+		lore.add(ChatColor.WHITE + "  por el grupo.");
 		
 		meta.setLore(lore);
 		item.setItemMeta(meta);
