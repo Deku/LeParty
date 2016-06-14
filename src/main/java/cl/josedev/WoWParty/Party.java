@@ -212,7 +212,7 @@ public class Party {
 
 	public void setLeader(Player leader) {
 		this.leaderId = leader.getUniqueId();
-		sendMessage("El nuevo líder es " + ChatColor.BOLD + leader.getName());
+		sendMessage(ChatColor.YELLOW + "El nuevo líder es " + ChatColor.BOLD + leader.getName());
 		update();
 	}
 	
