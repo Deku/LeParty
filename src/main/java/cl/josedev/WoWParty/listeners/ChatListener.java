@@ -3,6 +3,7 @@ package cl.josedev.WoWParty.listeners;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
@@ -17,7 +18,7 @@ public class ChatListener implements Listener {
 		this.plugin = instance;
 	}
 	
-	@EventHandler
+	@EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
 	public void onChat(AsyncPlayerChatEvent e) {
 		Player p = e.getPlayer();
 		Party party = this.plugin.getManager().getParty(p.getUniqueId());
