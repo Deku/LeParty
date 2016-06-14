@@ -10,11 +10,7 @@ commands:
     party:
         description: Party command
         usage: /<command> <option>
-        alias: pt
-    partyadmin:
-        description: Party admin command
-        usage: /<command <option>
-        alias: ptadmin
+        alias: grupo
         
 permissions:
     party.user:
