@@ -12,7 +12,7 @@ public class WoWParty extends JavaPlugin {
 	public double bonusPct = 1.0;
 	public boolean teleportAllowed = false;
 	public int invitationDuration = 30;
-	public static String TAG = ChatColor.WHITE + "[" + ChatColor.BLUE + ChatColor.BOLD + "P" + ChatColor.WHITE + "] " + ChatColor.RESET;
+	public static String TAG = ChatColor.WHITE + "[" + ChatColor.BLUE + ChatColor.BOLD + "Grupo" + ChatColor.WHITE + "] " + ChatColor.RESET;
 	private static WoWParty instance;
 	private PartyManager manager;
 	
