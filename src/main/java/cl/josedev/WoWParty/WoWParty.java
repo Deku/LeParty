@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import cl.josedev.WoWParty.commands.PartyCommand;
 import cl.josedev.WoWParty.listeners.ChatListener;
+import cl.josedev.WoWParty.listeners.GUIListener;
 import cl.josedev.WoWParty.listeners.PlayerListener;
 
 public class WoWParty extends JavaPlugin {
@@ -29,6 +30,7 @@ public class WoWParty extends JavaPlugin {
 		getCommand("party").setExecutor(new PartyCommand(this));
 		getServer().getPluginManager().registerEvents(new ChatListener(this), this);
 		getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
+		getServer().getPluginManager().registerEvents(new GUIListener(this), this);
 		instance = this;
 	}
 	
