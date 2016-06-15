@@ -29,15 +29,15 @@ public class Party {
 	public Party(Player leader) {
 		this.id = UUID.randomUUID();
 		this.leaderId = leader.getUniqueId();
-		this.members.add(leaderId);
 		setName(leader);
 		this.partyChest = Bukkit.getServer().createInventory(leader, (9 * 5), ChatColor.GOLD + "Cofre del grupo");
-		
 		this.board = Bukkit.getServer().getScoreboardManager().getNewScoreboard();
 		this.team = board.registerNewTeam(leader.getName());
 		team.setAllowFriendlyFire(false);
-		team.setPrefix(WoWParty.TAG);
+		team.setCanSeeFriendlyInvisibles(true);
 		this.objective = board.registerNewObjective("party_hp", "dummy");
+		
+		add(leader);
 	}
 	
 	public void add(Player p) {
