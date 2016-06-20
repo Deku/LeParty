@@ -10,7 +10,7 @@ import cl.josedev.WoWParty.listeners.PlayerListener;
 
 public class WoWParty extends JavaPlugin {
 	
-	public double bonusPct = 1.0;
+	public int bonusPct = 1;
 	public boolean teleportAllowed = false;
 	public int invitationDuration = 30;
 	public static String TAG = ChatColor.WHITE + "[" + ChatColor.BLUE + ChatColor.BOLD + "Grupo" + ChatColor.WHITE + "] " + ChatColor.RESET;
@@ -21,7 +21,7 @@ public class WoWParty extends JavaPlugin {
 	public void onEnable() {
 		saveDefaultConfig();
 		
-		bonusPct = this.getConfig().getDouble("fullPartyBonusPct");
+		bonusPct = this.getConfig().getInt("fullPartyBonusPct");
 		teleportAllowed = this.getConfig().getBoolean("teleportAllowed");
 		invitationDuration = this.getConfig().getInt("invitationDuration");
 		

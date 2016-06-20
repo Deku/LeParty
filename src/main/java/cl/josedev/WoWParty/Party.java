@@ -193,10 +193,14 @@ public class Party {
 
 	public void shareExp(Player origin, int expAmount) {
 		if (isFull()) {
-			expAmount *= WoWParty.getInstance().bonusPct;
+			expAmount += (expAmount * WoWParty.getInstance().bonusPct) / 100;
 		}
 		
-		int sharedExp = (int) Math.floor((expAmount * countOnline()) / 100);
+		int sharedExp = (int) Math.floor(expAmount / countOnline());
+		
+		if (sharedExp == 0) {
+			return;
+		}
 		
 		for (UUID pID : this.members) {
 			Player p = Bukkit.getServer().getPlayer(pID);
