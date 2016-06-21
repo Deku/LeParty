@@ -24,7 +24,8 @@ public class ChatListener implements Listener {
 		Party party = this.plugin.getManager().getParty(p.getUniqueId());
 		
 		if (party != null && this.plugin.getManager().inChatMode(p.getUniqueId())) {
-			party.sendMessage(ChatColor.BLUE + p.getName() + ChatColor.WHITE + " : " + ChatColor.ITALIC + e.getMessage());
+			String msg = ChatColor.BLUE + p.getName() + ChatColor.WHITE + " : " + ChatColor.ITALIC + e.getMessage();
+			party.sendChat(msg);
 			e.setCancelled(true);
 		}
 	}

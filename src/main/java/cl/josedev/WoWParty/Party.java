@@ -190,6 +190,11 @@ public class Party {
 			p.sendMessage(WoWParty.TAG + msg);
 		}
 	}
+	
+	public void sendChat(String msg) {
+		sendMessage(msg);
+		Bukkit.getServer().getLogger().info(ChatColor.stripColor(WoWParty.TAG + msg));
+	}
 
 	public void shareExp(Player origin, int expAmount) {
 		if (isFull()) {
