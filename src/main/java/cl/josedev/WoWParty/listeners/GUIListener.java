@@ -34,6 +34,7 @@ public class GUIListener implements Listener {
 		if (party != null) {	
 			if (e.getInventory().getTitle().equals(party.getName()) && e.getInventory().getSize() == 9) {
 				ItemStack item = e.getCurrentItem();
+				PartyGUI gui = new PartyGUI(this.plugin, p, party);
 				
 				if (item == null)
 					return;
@@ -95,12 +96,13 @@ public class GUIListener implements Listener {
 							e.setCancelled(true);
 						}
 					}
+				} else if (e.getSlot() == PartyGUI.SCOREBOARD_BUTTON_SLOT) {
+					party.toggleBoard(p);
+					gui.present();
 				} else if (item.equals(PartyGUI.PartyChest(p, party))) {
-					if (e.getClick().equals(ClickType.LEFT) || e.getClick().equals(ClickType.RIGHT)) {
-						PartyGUI gui = new PartyGUI(this.plugin, p, party);
-						gui.presentChest();
-					}
+					gui.presentChest();
 				}
+			
 				e.setCancelled(true);
 			}
 		}

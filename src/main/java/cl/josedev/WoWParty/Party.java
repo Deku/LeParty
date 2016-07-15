@@ -25,6 +25,7 @@ public class Party {
 	private Team team;
 	private Objective objective;
 	private Inventory partyChest;
+	private List<UUID> hiddenBoard = new ArrayList<UUID>();
 	
 	public Party(Player leader) {
 		this.id = UUID.randomUUID();
@@ -108,6 +109,10 @@ public class Party {
 		p.setScoreboard(board);
 	}
 	
+	public void hideBoard(Player p) { 
+		p.setScoreboard(Bukkit.getServer().getScoreboardManager().getNewScoreboard());
+	}
+	
 	public Scoreboard getBoard(String name) {
 		return board;
 	}
@@ -160,6 +165,10 @@ public class Party {
 		return this.members.contains(uuid);
 	}
 	
+	public boolean isShowingBoard(UUID uuid) {
+		return !this.hiddenBoard.contains(uuid);
+	}
+	
 	public void remove(Player p) {
 		members.remove(p.getUniqueId());
 		team.removeEntry(p.getName());
@@ -179,7 +188,7 @@ public class Party {
 		}
 		
 		if (p.isOnline()) {
-			p.setScoreboard(Bukkit.getServer().getScoreboardManager().getNewScoreboard());
+			hideBoard(p);
 			p.sendMessage(WoWParty.TAG + ChatColor.YELLOW + "Abandonaste el grupo");
 		}
 	}
@@ -229,6 +238,16 @@ public class Party {
 		this.partyName = ChatColor.BLUE + "Grupo de " + ChatColor.BOLD + leader.getName();
 	}
 	
+	public void toggleBoard(Player p) {
+		if (isShowingBoard(p.getUniqueId())) {
+			this.hiddenBoard.add(p.getUniqueId());
+			hideBoard(p);
+		} else {
+			this.hiddenBoard.remove(p.getUniqueId());
+			p.setScoreboard(board);
+		}
+	}
+	
 	public void update() {
 		new BukkitRunnable() {
 			public void run() {
@@ -244,7 +263,10 @@ public class Party {
 					
 					if (p != null) {
 						objective.getScore(ChatColor.WHITE + p.getName()).setScore((int) Math.round(p.getHealth()));
-						p.setScoreboard(board);
+						
+						if (isShowingBoard(uuid)) {
+							p.setScoreboard(board);
+						}
 					}
 				}
 			}

@@ -37,7 +37,7 @@ public class PartyCommand implements CommandExecutor {
 			if (args.length == 0) {
 				if (party != null) {
 					PartyGUI gui = new PartyGUI(this.plugin, p, party);
-					gui.present(party.isLeader(p));
+					gui.present();
 					
 					return true;
 				}
@@ -59,6 +59,7 @@ public class PartyCommand implements CommandExecutor {
 					info(p, "/party leader <player> -  Entrega el líder a otro jugador del grupo");
 					info(p, "/party chat -  Activa/Desactiva el chat de grupo");
 					info(p, "/party roll -  Tira un dado de 1 a 100 (lo ve sólo el grupo)");
+					info(p, "/party toggle - Muestra/Oculta la info de la party");
 					
 					return true;
 				case "leave":
@@ -213,6 +214,14 @@ public class PartyCommand implements CommandExecutor {
 						} else {
 							p.sendMessage(WoWParty.TAG + ChatColor.RED + "El jugador no está en ĺínea!");
 						}
+					} else {
+						error(p, "No estás en un grupo!");
+					}
+					
+					return true;
+				case "toggle":
+					if (party != null) {
+						party.toggleBoard(p);
 					} else {
 						error(p, "No estás en un grupo!");
 					}

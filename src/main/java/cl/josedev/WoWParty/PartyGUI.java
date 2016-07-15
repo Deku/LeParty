@@ -20,6 +20,9 @@ public class PartyGUI {
 	private Inventory inventory;
 	private Player player;
 	private Party party;
+	public static final int SCOREBOARD_BUTTON_SLOT = 7;
+	public static final int CHEST_BUTTON_SLOT = 8;
+	
 
 	public PartyGUI(WoWParty plugin, Player player, Party party) {
 		this.plugin = plugin;
@@ -27,43 +30,80 @@ public class PartyGUI {
 		this.party = party;
 	}
 
-	public void present(boolean promote) {
+	public void present() {
 		inventory = Bukkit.getServer().createInventory(player, 9, party.getName());
 		
+		// Party members' heads
 		for (int i = 0; i < party.getSize(); i++) {
 			UUID uuid = party.getMember(i);
 			Player p = Bukkit.getServer().getPlayer(uuid);
 			ItemStack item = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
 			SkullMeta meta = (SkullMeta) item.getItemMeta();
 			ArrayList<String> lore = new ArrayList<String>();
-			lore.add(ChatColor.WHITE + "" + (int) p.getHealth() + ChatColor.RED + " ♥");
-
-			if (p.getLocation().getWorld().getName() == player.getLocation().getWorld().getName()) {
-				lore.add(ChatColor.WHITE + "Distancia: " + ChatColor.UNDERLINE + Math.round(p.getLocation().distance(player.getLocation())) + " bloques");
-			} else {
-				lore.add(ChatColor.WHITE + "Distancia: " + ChatColor.MAGIC + "11111" + ChatColor.RESET + " (en otro mundo)");
-			}
-			meta.setOwner(p.getName());
 			
-			if (p != player && this.plugin.teleportAllowed) {
-				lore.add("" + ChatColor.GREEN + ChatColor.BOLD + "Click para teletransportarte");
-			}
-			
-			if (promote && p != player && party.getLeaderID().equals(player.getUniqueId())) {
-				lore.add(" ");
-				lore.add("" + ChatColor.GOLD + ChatColor.ITALIC + "Shift + Click derecho" + ChatColor.RESET + ChatColor.GOLD +" para entregar lider");
-			}
-
+			// Name
 			if (party.getLeaderID().equals(p.getUniqueId())) {
 				meta.setDisplayName("" + ChatColor.WHITE + ChatColor.BOLD + p.getName());
 			} else {
 				meta.setDisplayName(ChatColor.WHITE + p.getName());
 			}
+			
+			// Head texture
+			meta.setOwner(p.getName());
+			
+			// Health
+			lore.add(ChatColor.WHITE + "" + (int) p.getHealth() + ChatColor.RED + " ♥");
+
+			// Distance
+			if (p.getLocation().getWorld().getName() == player.getLocation().getWorld().getName()) {
+				lore.add(ChatColor.WHITE + "Distancia: " + ChatColor.UNDERLINE + Math.round(p.getLocation().distance(player.getLocation())) + " bloques");
+			} else {
+				lore.add(ChatColor.WHITE + "Distancia: " + ChatColor.MAGIC + "11111" + ChatColor.RESET + " (en otro mundo)");
+			}
+			
+			// Teleport
+			if (p != player && this.plugin.teleportAllowed) {
+				lore.add("" + ChatColor.GREEN + ChatColor.BOLD + "Click para teletransportarte");
+			}
+			
+			// Promote
+			if (p != player && party.isLeader(p)) {
+				lore.add("");
+				lore.add("" + ChatColor.GOLD + ChatColor.ITALIC + "Shift + Click derecho" + ChatColor.RESET + ChatColor.GOLD +" para entregar lider");
+			}
+
 			meta.setLore(lore);
 			item.setItemMeta(meta);
 			getInventory().setItem(i, item);
 		}
-		getInventory().setItem(8, PartyChest(player, party));
+		
+		// Toggle scoreboard button
+		if (party.isShowingBoard(player.getUniqueId())) {
+			ItemStack hideButton = new ItemStack(Material.BARRIER);
+			ItemMeta meta = hideButton.getItemMeta();
+			List<String> lore = new ArrayList<String>();
+			meta.setDisplayName("" + ChatColor.RED + ChatColor.BOLD + "Desactivar " + ChatColor.RED + "resumen de grupo");
+			lore.add(ChatColor.GRAY + "Click para desactivar el");
+			lore.add(ChatColor.GRAY + "listado del grupo en pantalla");
+			meta.setLore(lore);
+			hideButton.setItemMeta(meta);
+			
+			getInventory().setItem(SCOREBOARD_BUTTON_SLOT, hideButton);
+		} else {
+			ItemStack showButton = new ItemStack(Material.SIGN);
+			ItemMeta meta = showButton.getItemMeta();
+			List<String> lore = new ArrayList<String>();
+			meta.setDisplayName("" + ChatColor.GREEN + ChatColor.BOLD + "Activar " + ChatColor.GREEN + "resumen de grupo");
+			lore.add(ChatColor.GRAY + "Click para activar el");
+			lore.add(ChatColor.GRAY + "listado del grupo en pantalla");
+			meta.setLore(lore);
+			showButton.setItemMeta(meta);
+			
+			getInventory().setItem(SCOREBOARD_BUTTON_SLOT, showButton);
+		}
+		
+		// Chest button
+		getInventory().setItem(CHEST_BUTTON_SLOT, PartyChest(player, party));
 		player.openInventory(getInventory());
 	}
 
