@@ -37,7 +37,12 @@ public class PartyGUI {
 			SkullMeta meta = (SkullMeta) item.getItemMeta();
 			ArrayList<String> lore = new ArrayList<String>();
 			lore.add(ChatColor.WHITE + "" + (int) p.getHealth() + ChatColor.RED + " ♥");
-			lore.add(ChatColor.WHITE + "Distancia: " + ChatColor.UNDERLINE + Math.round(p.getLocation().distance(player.getLocation())) + " bloques");
+
+			if (p.getLocation().getWorld().getName() == player.getLocation().getWorld().getName()) {
+				lore.add(ChatColor.WHITE + "Distancia: " + ChatColor.UNDERLINE + Math.round(p.getLocation().distance(player.getLocation())) + " bloques");
+			} else {
+				lore.add(ChatColor.WHITE + "Distancia: " + ChatColor.MAGIC + "11111" + ChatColor.RESET + " (en otro mundo)");
+			}
 			meta.setOwner(p.getName());
 			
 			if (p != player && this.plugin.teleportAllowed) {
