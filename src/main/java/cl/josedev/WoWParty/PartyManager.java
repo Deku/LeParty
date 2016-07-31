@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import net.md_5.bungee.api.ChatColor;
@@ -13,12 +14,14 @@ import net.md_5.bungee.api.ChatColor;
 public class PartyManager {
 	private List<Party> parties;
 	private List<UUID> partyChat;
+	private List<UUID> spyMode;
 	private Map<UUID, UUID> inviteQueue;
 
 	public PartyManager() {
 		parties = new ArrayList<Party>();
 		partyChat = new ArrayList<UUID>();
 		inviteQueue = new HashMap<UUID, UUID>();
+		spyMode = new ArrayList<UUID>();
 	}
 
 	public void addParty(Party p) {
@@ -93,14 +96,60 @@ public class PartyManager {
 	public void togglePartyChat(Player player) {
 		if (partyChat.contains(player.getUniqueId())) {
 			partyChat.remove(player.getUniqueId());
-			player.sendMessage(WoWParty.TAG + ChatColor.YELLOW + "Chat de grupo desactivado");
+			player.sendMessage(WoWParty.TAG + ChatColor.RED + "Chat de grupo desactivado");
 		} else {
 			partyChat.add(player.getUniqueId());
-			player.sendMessage(WoWParty.TAG + ChatColor.YELLOW + "Chat de grupo activado");
+			player.sendMessage(WoWParty.TAG + ChatColor.GREEN + "Chat de grupo activado");
 		}
 	}
 
 	public boolean inChatMode(UUID playerId) {
 		return partyChat.contains(playerId);
+	}
+	
+	public void disableChatMode(UUID playerId) {
+		if (partyChat.contains(playerId)) {
+			partyChat.remove(playerId);
+		}
+	}
+	
+	public void toggleSpyMode(Player player) {
+		if (spyMode.contains(player.getUniqueId())) {
+			spyMode.remove(player.getUniqueId());
+			player.sendMessage(WoWParty.TAG + ChatColor.RED + "Modo de espía desactivado");
+		} else {
+			spyMode.add(player.getUniqueId());
+			player.sendMessage(WoWParty.TAG + ChatColor.GREEN + "Modo de espía activado");
+		}
+	}
+	
+	public boolean isListeningChat(UUID playerId) {
+		return spyMode.contains(playerId);
+	}
+	
+	public boolean isSomeoneListening() {
+		return spyMode.size() > 0;
+	}
+
+	public void sendSpyChat(Party party, Player sender, String msg) {
+		if (!isSomeoneListening()) {
+			return;
+		}
+		
+		for (UUID id : spyMode) {
+			if (!party.isMember(id)) {
+				Player p = Bukkit.getServer().getPlayer(id);
+				
+				if (p != null && p.isOnline()) {
+						p.sendMessage(WoWParty.TAG + ChatColor.LIGHT_PURPLE + "[" + party.getLeader().getName() + "] " + sender.getName() + ": " + ChatColor.DARK_PURPLE + msg);
+				}
+			}
+		}
+	}
+	
+	public void disableSpyMode(UUID playerId) {
+		if (spyMode.contains(playerId)) {
+			spyMode.remove(playerId);
+		}
 	}
 }

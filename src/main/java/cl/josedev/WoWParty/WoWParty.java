@@ -3,6 +3,7 @@ package cl.josedev.WoWParty;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import cl.josedev.WoWParty.commands.PartyAdminCommand;
 import cl.josedev.WoWParty.commands.PartyCommand;
 import cl.josedev.WoWParty.listeners.ChatListener;
 import cl.josedev.WoWParty.listeners.GUIListener;
@@ -14,6 +15,8 @@ public class WoWParty extends JavaPlugin {
 	public boolean teleportAllowed = false;
 	public int invitationDuration = 30;
 	public static String TAG = ChatColor.WHITE + "[" + ChatColor.BLUE + ChatColor.BOLD + "Grupo" + ChatColor.WHITE + "] " + ChatColor.RESET;
+	public static String PERM_USER = "party.user";
+	public static String PERM_ADMIN = "party.admin";
 	private static WoWParty instance;
 	private PartyManager manager;
 	
@@ -28,6 +31,8 @@ public class WoWParty extends JavaPlugin {
 		manager = new PartyManager();
 		
 		getCommand("party").setExecutor(new PartyCommand(this));
+		getCommand("partyadmin").setExecutor(new PartyAdminCommand(this));
+		
 		getServer().getPluginManager().registerEvents(new ChatListener(this), this);
 		getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
 		getServer().getPluginManager().registerEvents(new GUIListener(this), this);

@@ -1,6 +1,5 @@
 package cl.josedev.WoWParty.listeners;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -24,8 +23,9 @@ public class ChatListener implements Listener {
 		Party party = this.plugin.getManager().getParty(p.getUniqueId());
 		
 		if (party != null && this.plugin.getManager().inChatMode(p.getUniqueId())) {
-			String msg = ChatColor.BLUE + p.getName() + ChatColor.WHITE + " : " + ChatColor.ITALIC + e.getMessage();
-			party.sendChat(msg);
+			party.sendChat(p, e.getMessage());
+			this.plugin.getManager().sendSpyChat(party, p, e.getMessage());
+			
 			e.setCancelled(true);
 		}
 	}

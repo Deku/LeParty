@@ -9,8 +9,12 @@ main: cl.josedev.WoWParty.WoWParty
 commands:
     party:
         description: Party command
-        usage: /<command> <option>
+        usage: /party <option>
         alias: grupo
+    partyadmin:
+        description: Party Admin command
+        usage: /partyadmin <option>
+        alias: ptadmin
         
 permissions:
     party.user:

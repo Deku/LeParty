@@ -200,7 +200,8 @@ public class Party {
 		}
 	}
 	
-	public void sendChat(String msg) {
+	public void sendChat(Player sender, String msg) {
+		msg = ChatColor.BLUE + sender.getName() + ChatColor.WHITE + " : " + ChatColor.ITALIC + msg;
 		sendMessage(msg);
 		Bukkit.getServer().getLogger().info(ChatColor.stripColor(WoWParty.TAG + msg));
 	}

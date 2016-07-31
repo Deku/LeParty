@@ -1,5 +1,7 @@
 package cl.josedev.WoWParty.listeners;
 
+import java.util.UUID;
+
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,10 +30,17 @@ public class PlayerListener implements Listener {
 	@EventHandler
 	public void onPlayerLeave(PlayerQuitEvent e) {
 		Player p = e.getPlayer();
-		Party party = this.plugin.getManager().getParty(p.getUniqueId());
+		UUID pId = p.getUniqueId();
+		Party party = this.plugin.getManager().getParty(pId);
 		
 		if (party != null) {
 			party.remove(p);
+		}
+		
+		plugin.getManager().disableChatMode(pId);
+		
+		if (p.hasPermission(WoWParty.PERM_ADMIN)) {
+			plugin.getManager().disableSpyMode(pId);
 		}
 	}
 	
