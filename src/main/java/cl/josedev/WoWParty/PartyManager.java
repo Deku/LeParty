@@ -8,6 +8,8 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -16,12 +18,14 @@ public class PartyManager {
 	private List<UUID> partyChat;
 	private List<UUID> spyMode;
 	private Map<UUID, UUID> inviteQueue;
+	private Map<UUID, Inventory> voidChest;
 
 	public PartyManager() {
 		parties = new ArrayList<Party>();
 		partyChat = new ArrayList<UUID>();
 		inviteQueue = new HashMap<UUID, UUID>();
 		spyMode = new ArrayList<UUID>();
+		voidChest = new HashMap<UUID, Inventory>();
 	}
 
 	public void addParty(Party p) {
@@ -150,6 +154,24 @@ public class PartyManager {
 	public void disableSpyMode(UUID playerId) {
 		if (spyMode.contains(playerId)) {
 			spyMode.remove(playerId);
+		}
+	}
+	
+	public void addVoidChest(UUID playerId, Inventory chest) {
+		voidChest.put(playerId, chest);
+	}
+	
+	public Inventory getVoidChest(UUID playerId) {
+		if (voidChest.containsKey(playerId)) {
+			return voidChest.get(playerId);
+		} else {
+			return null;
+		}
+	}
+	
+	public void removeVoidChest(UUID playerId) {
+		if (voidChest.containsKey(playerId)) {
+			voidChest.remove(playerId);
 		}
 	}
 }

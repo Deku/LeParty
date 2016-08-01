@@ -38,6 +38,7 @@ public class PlayerListener implements Listener {
 		}
 		
 		plugin.getManager().disableChatMode(pId);
+		plugin.getManager().removeVoidChest(pId);
 		
 		if (p.hasPermission(WoWParty.PERM_ADMIN)) {
 			plugin.getManager().disableSpyMode(pId);
@@ -47,10 +48,18 @@ public class PlayerListener implements Listener {
 	@EventHandler
 	public void onPlayerKick(PlayerKickEvent e) {
 		Player p = e.getPlayer();
-		Party party = this.plugin.getManager().getParty(p.getUniqueId());
+		UUID pId = p.getUniqueId();
+		Party party = this.plugin.getManager().getParty(pId);
 		
 		if (party != null) {
 			party.remove(p);
+		}
+
+		plugin.getManager().disableChatMode(pId);
+		plugin.getManager().removeVoidChest(pId);
+		
+		if (p.hasPermission(WoWParty.PERM_ADMIN)) {
+			plugin.getManager().disableSpyMode(pId);
 		}
 	}
 	

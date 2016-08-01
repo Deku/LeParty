@@ -6,8 +6,10 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -28,15 +30,18 @@ public class Party {
 	private List<UUID> hiddenBoard = new ArrayList<UUID>();
 	
 	public Party(Player leader) {
-		this.id = UUID.randomUUID();
-		this.leaderId = leader.getUniqueId();
+		id = UUID.randomUUID();
+		leaderId = leader.getUniqueId();
 		setName(leader);
-		this.partyChest = Bukkit.getServer().createInventory(leader, (9 * 5), ChatColor.GOLD + "Cofre del grupo");
-		this.board = Bukkit.getServer().getScoreboardManager().getNewScoreboard();
-		this.team = board.registerNewTeam(leader.getName());
+		partyChest = Bukkit.getServer().createInventory(leader, (9 * 5), ChatColor.GOLD + "Cofre del grupo");
+		board = Bukkit.getServer().getScoreboardManager().getNewScoreboard();
+		team = board.registerNewTeam(leader.getName());
 		team.setAllowFriendlyFire(false);
 		team.setCanSeeFriendlyInvisibles(true);
-		this.objective = board.registerNewObjective("party_hp", "dummy");
+		objective = board.registerNewObjective("party_hp", "dummy");
+		
+		// Delete void chest for leader if any
+		WoWParty.getInstance().getManager().removeVoidChest(leaderId);
 		
 		add(leader);
 	}
@@ -56,13 +61,6 @@ public class Party {
 	
 	public boolean checkSize() {
 		if (getSize() == 1) {
-			sendMessage(ChatColor.RED + "El grupo se ha disuelto por falta de miembros");
-			
-			for (UUID uuid : getMembers()) {
-				Player pl = Bukkit.getServer().getPlayer(uuid);
-				pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
-			}
-			
 			Party.disolve(this);
 			return true;
 		}
@@ -87,11 +85,24 @@ public class Party {
 	}
 	
 	public static void disolve(Party party) {
+		party.sendMessage(ChatColor.RED + "El grupo se ha disuelto por falta de miembros");
+		
+		if (hasContents(party.partyChest)) {
+			WoWParty.getInstance().getManager().addVoidChest(party.leaderId, party.partyChest);
+			party.getLeader().sendMessage(WoWParty.TAG + ChatColor.AQUA + "Se detectaron items en el cofre de tu grupo, estos estarán disponibles hasta que te desconectes. Para recuperarlos usa " + ChatColor.UNDERLINE + "/party recover");
+		}
+		
+		for (UUID uuid : party.getMembers()) {
+			Player pl = Bukkit.getServer().getPlayer(uuid);
+			pl.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+		}
+		
 		party.leaderId = null;
 		party.members.clear();
 		party.team = null;
 		party.board = null;
 		party.objective = null;
+		party.partyChest = null;
 		WoWParty.getInstance().getManager().removeParty(party);
 		party = null;
 	}
@@ -151,6 +162,16 @@ public class Party {
 	
 	public Player getPlayer(int position) {
 		return Bukkit.getServer().getPlayer(members.get(position));
+	}
+	
+	public static  boolean hasContents(Inventory inv) {
+		for (ItemStack item : inv.getContents()) {
+			if (item != null) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	public boolean isFull() {

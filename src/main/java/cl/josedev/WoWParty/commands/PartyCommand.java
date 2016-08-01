@@ -8,6 +8,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import cl.josedev.WoWParty.WoWParty;
@@ -224,6 +225,16 @@ public class PartyCommand implements CommandExecutor {
 						party.toggleBoard(p);
 					} else {
 						error(p, "No estás en un grupo!");
+					}
+					
+					return true;
+				case "recover":
+					Inventory chest = plugin.getManager().getVoidChest(p.getUniqueId());
+					
+					if (chest != null) {
+						p.openInventory(chest);
+					} else {
+						error(p, "No tienes items por recuperar!");
 					}
 					
 					return true;
