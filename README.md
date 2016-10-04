@@ -1,4 +1,4 @@
-# WoWParty
+# LeParty
 Spigot plugin. Party system with different share features, includes GUI
 
 **This plugin is for private purposes (my own server) and is not intended to be published on Spigot's Resources Index yet.**
