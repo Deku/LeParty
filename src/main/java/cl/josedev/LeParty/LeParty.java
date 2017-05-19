@@ -1,15 +1,15 @@
-package cl.josedev.WoWParty;
+package cl.josedev.LeParty;
 
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import cl.josedev.WoWParty.commands.PartyAdminCommand;
-import cl.josedev.WoWParty.commands.PartyCommand;
-import cl.josedev.WoWParty.listeners.ChatListener;
-import cl.josedev.WoWParty.listeners.GUIListener;
-import cl.josedev.WoWParty.listeners.PlayerListener;
+import cl.josedev.LeParty.commands.PartyAdminCommand;
+import cl.josedev.LeParty.commands.PartyCommand;
+import cl.josedev.LeParty.listeners.ChatListener;
+import cl.josedev.LeParty.listeners.GUIListener;
+import cl.josedev.LeParty.listeners.PlayerListener;
 
-public class WoWParty extends JavaPlugin {
+public class LeParty extends JavaPlugin {
 	
 	public int bonusPct = 1;
 	public boolean teleportAllowed = false;
@@ -17,7 +17,7 @@ public class WoWParty extends JavaPlugin {
 	public static String TAG = ChatColor.WHITE + "[" + ChatColor.BLUE + ChatColor.BOLD + "Grupo" + ChatColor.WHITE + "] " + ChatColor.RESET;
 	public static String PERM_USER = "party.user";
 	public static String PERM_ADMIN = "party.admin";
-	private static WoWParty instance;
+	private static LeParty instance;
 	private PartyManager manager;
 	
 	@Override
@@ -48,7 +48,7 @@ public class WoWParty extends JavaPlugin {
 		return this.manager;
 	}
 
-	public static WoWParty getInstance() {
+	public static LeParty getInstance() {
 		return instance;
 	}
 	

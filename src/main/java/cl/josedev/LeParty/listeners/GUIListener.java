@@ -1,4 +1,4 @@
-package cl.josedev.WoWParty.listeners;
+package cl.josedev.LeParty.listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,15 +14,15 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import cl.josedev.WoWParty.Party;
-import cl.josedev.WoWParty.PartyGUI;
-import cl.josedev.WoWParty.WoWParty;
+import cl.josedev.LeParty.Party;
+import cl.josedev.LeParty.PartyGUI;
+import cl.josedev.LeParty.LeParty;
 
 public class GUIListener implements Listener {
 
-	private WoWParty plugin;
+	private LeParty plugin;
 	
-	public GUIListener(WoWParty instance) {
+	public GUIListener(LeParty instance) {
 		this.plugin = instance;
 	}
 	
@@ -67,7 +67,7 @@ public class GUIListener implements Listener {
 							if (this.plugin.teleportAllowed) {
 								e.setCancelled(true);
 								p.closeInventory();
-								p.sendMessage(WoWParty.TAG + ChatColor.GREEN + "Comenzando el teletransporte a " + ChatColor.UNDERLINE + clickedPlayer.getName() + ChatColor.GREEN + " en 3 segundos...");
+								p.sendMessage(LeParty.TAG + ChatColor.GREEN + "Comenzando el teletransporte a " + ChatColor.UNDERLINE + clickedPlayer.getName() + ChatColor.GREEN + " en 3 segundos...");
 								
 								new BukkitRunnable() {
 									int time = 12;

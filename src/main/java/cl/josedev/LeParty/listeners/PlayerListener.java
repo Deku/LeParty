@@ -1,4 +1,4 @@
-package cl.josedev.WoWParty.listeners;
+package cl.josedev.LeParty.listeners;
 
 import java.util.UUID;
 
@@ -16,14 +16,14 @@ import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
-import cl.josedev.WoWParty.Party;
-import cl.josedev.WoWParty.WoWParty;
+import cl.josedev.LeParty.Party;
+import cl.josedev.LeParty.LeParty;
 
 public class PlayerListener implements Listener {
 
-	private WoWParty plugin;
+	private LeParty plugin;
 	
-	public PlayerListener(WoWParty instance) {
+	public PlayerListener(LeParty instance) {
 		this.plugin = instance;
 	}
 	
@@ -40,7 +40,7 @@ public class PlayerListener implements Listener {
 		plugin.getManager().disableChatMode(pId);
 		plugin.getManager().removeVoidChest(pId);
 		
-		if (p.hasPermission(WoWParty.PERM_ADMIN)) {
+		if (p.hasPermission(LeParty.PERM_ADMIN)) {
 			plugin.getManager().disableSpyMode(pId);
 		}
 	}
@@ -58,7 +58,7 @@ public class PlayerListener implements Listener {
 		plugin.getManager().disableChatMode(pId);
 		plugin.getManager().removeVoidChest(pId);
 		
-		if (p.hasPermission(WoWParty.PERM_ADMIN)) {
+		if (p.hasPermission(LeParty.PERM_ADMIN)) {
 			plugin.getManager().disableSpyMode(pId);
 		}
 	}

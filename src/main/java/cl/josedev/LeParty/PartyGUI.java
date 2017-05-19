@@ -1,4 +1,4 @@
-package cl.josedev.WoWParty;
+package cl.josedev.LeParty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.Plugin;
 
 public class PartyGUI {
-	private WoWParty plugin;
+	private LeParty plugin;
 	private Inventory inventory;
 	private Player player;
 	private Party party;
@@ -24,7 +24,7 @@ public class PartyGUI {
 	public static final int CHEST_BUTTON_SLOT = 8;
 	
 
-	public PartyGUI(WoWParty plugin, Player player, Party party) {
+	public PartyGUI(LeParty plugin, Player player, Party party) {
 		this.plugin = plugin;
 		this.player = player;
 		this.party = party;

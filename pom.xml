@@ -25,6 +25,6 @@
             <scope>provided</scope>
     </dependency>
 </dependencies>
-	<artifactId>WoWParty</artifactId>
-	<name>WoWParty</name>
+	<artifactId>LeParty</artifactId>
+	<name>LeParty</name>
 </project>

@@ -1,4 +1,4 @@
-package cl.josedev.WoWParty;
+package cl.josedev.LeParty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ public class Party {
 		objective = board.registerNewObjective("party_hp", "dummy");
 		
 		// Delete void chest for leader if any
-		WoWParty.getInstance().getManager().removeVoidChest(leaderId);
+		LeParty.getInstance().getManager().removeVoidChest(leaderId);
 		
 		add(leader);
 	}
@@ -88,8 +88,8 @@ public class Party {
 		party.sendMessage(ChatColor.RED + "El grupo se ha disuelto por falta de miembros");
 		
 		if (hasContents(party.partyChest)) {
-			WoWParty.getInstance().getManager().addVoidChest(party.leaderId, party.partyChest);
-			party.getLeader().sendMessage(WoWParty.TAG + ChatColor.AQUA + "Se detectaron items en el cofre de tu grupo, estos estarán disponibles hasta que te desconectes. Para recuperarlos usa " + ChatColor.UNDERLINE + "/party recover");
+			LeParty.getInstance().getManager().addVoidChest(party.leaderId, party.partyChest);
+			party.getLeader().sendMessage(LeParty.TAG + ChatColor.AQUA + "Se detectaron items en el cofre de tu grupo, estos estarán disponibles hasta que te desconectes. Para recuperarlos usa " + ChatColor.UNDERLINE + "/party recover");
 		}
 		
 		for (UUID uuid : party.getMembers()) {
@@ -103,7 +103,7 @@ public class Party {
 		party.board = null;
 		party.objective = null;
 		party.partyChest = null;
-		WoWParty.getInstance().getManager().removeParty(party);
+		LeParty.getInstance().getManager().removeParty(party);
 		party = null;
 	}
 
@@ -210,26 +210,26 @@ public class Party {
 		
 		if (p.isOnline()) {
 			hideBoard(p);
-			p.sendMessage(WoWParty.TAG + ChatColor.YELLOW + "Abandonaste el grupo");
+			p.sendMessage(LeParty.TAG + ChatColor.YELLOW + "Abandonaste el grupo");
 		}
 	}
 	
 	public void sendMessage(String msg) {
 		for (UUID uuid : getMembers()) {
 			Player p = Bukkit.getServer().getPlayer(uuid);
-			p.sendMessage(WoWParty.TAG + msg);
+			p.sendMessage(LeParty.TAG + msg);
 		}
 	}
 	
 	public void sendChat(Player sender, String msg) {
 		msg = ChatColor.BLUE + sender.getName() + ChatColor.WHITE + " : " + ChatColor.ITALIC + msg;
 		sendMessage(msg);
-		Bukkit.getServer().getLogger().info(ChatColor.stripColor(WoWParty.TAG + msg));
+		Bukkit.getServer().getLogger().info(ChatColor.stripColor(LeParty.TAG + msg));
 	}
 
 	public void shareExp(Player origin, int expAmount) {
 		if (isFull()) {
-			expAmount += (expAmount * WoWParty.getInstance().bonusPct) / 100;
+			expAmount += (expAmount * LeParty.getInstance().bonusPct) / 100;
 		}
 		
 		int sharedExp = (int) Math.floor(expAmount / countOnline());
@@ -244,7 +244,7 @@ public class Party {
 			if (p != null && p != origin) {
 				if (p.isOnline()) {
 					p.giveExp(sharedExp);
-					p.sendMessage(WoWParty.TAG + ChatColor.GREEN + "+ " + sharedExp + " exp!");
+					p.sendMessage(LeParty.TAG + ChatColor.GREEN + "+ " + sharedExp + " exp!");
 				}
 			}
 		}
@@ -292,6 +292,6 @@ public class Party {
 					}
 				}
 			}
-		}.runTaskLater(WoWParty.getInstance(), 5L);
+		}.runTaskLater(LeParty.getInstance(), 5L);
 	}
 }

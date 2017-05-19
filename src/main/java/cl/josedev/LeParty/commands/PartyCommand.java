@@ -1,4 +1,4 @@
-package cl.josedev.WoWParty.commands;
+package cl.josedev.LeParty.commands;
 
 import java.util.Random;
 
@@ -11,15 +11,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import cl.josedev.WoWParty.WoWParty;
-import cl.josedev.WoWParty.Party;
-import cl.josedev.WoWParty.PartyGUI;
+import cl.josedev.LeParty.Party;
+import cl.josedev.LeParty.PartyGUI;
+import cl.josedev.LeParty.LeParty;
 
 public class PartyCommand implements CommandExecutor {
 
-	private final WoWParty plugin;
+	private final LeParty plugin;
 	
-	public PartyCommand(WoWParty plugin) {
+	public PartyCommand(LeParty plugin) {
 		this.plugin = plugin;
 	}
 	
@@ -151,7 +151,7 @@ public class PartyCommand implements CommandExecutor {
 						if (pt.getSize() == 1) {
 							Player leader = pt.getLeader();
 							leader.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
-							leader.sendMessage(WoWParty.TAG + ChatColor.RED + " Tu grupo fue disuelto porque " + p.getName() + " rechazó tu invitación");
+							leader.sendMessage(LeParty.TAG + ChatColor.RED + " Tu grupo fue disuelto porque " + p.getName() + " rechazó tu invitación");
 							Party.disolve(pt);
 						}
 					} else {
@@ -210,10 +210,10 @@ public class PartyCommand implements CommandExecutor {
 							if (party.isMember(nl.getUniqueId())) {
 								party.setLeader(nl);
 							} else {
-								p.sendMessage(WoWParty.TAG + ChatColor.RED + "Selecciona a un jugador del grupo!");
+								p.sendMessage(LeParty.TAG + ChatColor.RED + "Selecciona a un jugador del grupo!");
 							}
 						} else {
-							p.sendMessage(WoWParty.TAG + ChatColor.RED + "El jugador no está en ĺínea!");
+							p.sendMessage(LeParty.TAG + ChatColor.RED + "El jugador no está en ĺínea!");
 						}
 					} else {
 						error(p, "No estás en un grupo!");
@@ -255,36 +255,36 @@ public class PartyCommand implements CommandExecutor {
 				leader.sendMessage(ChatColor.YELLOW + "Has invitado a " + player.getName() + " a tu grupo!");
 				this.plugin.getManager().addInvite(player.getUniqueId(), party);
 				
-				final WoWParty pl = this.plugin;
+				final LeParty pl = this.plugin;
 				new BukkitRunnable() {
 
 					public void run() {
 						if (pl.getManager().isInvited(player.getUniqueId())) {
 							pl.getManager().removeInvite(player.getUniqueId());
-							player.sendMessage(WoWParty.TAG + "Tu invitación está expirado!");
+							player.sendMessage(LeParty.TAG + "Tu invitación está expirado!");
 							
 							if (party.getMembers().size() == 1) {
 								Party.disolve(party);
 								leader.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
-								leader.sendMessage(WoWParty.TAG + ChatColor.RED + "El grupo se ha disuelto");
+								leader.sendMessage(LeParty.TAG + ChatColor.RED + "El grupo se ha disuelto");
 							}
 						}
 					}
 				}.runTaskLater(this.plugin, (20L * this.plugin.invitationDuration));
 			} else {
-				leader.sendMessage(WoWParty.TAG + ChatColor.RED + "El jugador ya ha sido invitado!");
+				leader.sendMessage(LeParty.TAG + ChatColor.RED + "El jugador ya ha sido invitado!");
 			}	
 		} else {
-			leader.sendMessage(WoWParty.TAG + ChatColor.RED + "Player is already in your party!");
+			leader.sendMessage(LeParty.TAG + ChatColor.RED + "Player is already in your party!");
 			return;
 		}
 	}
 
 	private void  info(Player p, String msg) {
-		p.sendMessage(WoWParty.TAG + ChatColor.YELLOW + msg);
+		p.sendMessage(LeParty.TAG + ChatColor.YELLOW + msg);
 	}
 	
 	private void  error(Player p, String msg) {
-		p.sendMessage(WoWParty.TAG + ChatColor.RED + msg);
+		p.sendMessage(LeParty.TAG + ChatColor.RED + msg);
 	}
 }

@@ -1,4 +1,4 @@
-package cl.josedev.WoWParty.commands;
+package cl.josedev.LeParty.commands;
 
 import java.util.List;
 import java.util.UUID;
@@ -10,21 +10,21 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import cl.josedev.WoWParty.WoWParty;
-import cl.josedev.WoWParty.Party;
+import cl.josedev.LeParty.Party;
+import cl.josedev.LeParty.LeParty;
 
 public class PartyAdminCommand implements CommandExecutor {
 
-	WoWParty plugin;
+	LeParty plugin;
 	
-	public PartyAdminCommand(WoWParty instance) {
+	public PartyAdminCommand(LeParty instance) {
 		this.plugin = instance;
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		
 		if (cmd.getName().equalsIgnoreCase("partyadmin")) {
-			if (!sender.hasPermission(WoWParty.PERM_ADMIN)) {
+			if (!sender.hasPermission(LeParty.PERM_ADMIN)) {
 				error(sender, "No tienes permiso para usar este comando!");
 				return true;
 			}
@@ -136,14 +136,14 @@ public class PartyAdminCommand implements CommandExecutor {
 	}
 
 	private void  success(CommandSender sender, String msg) {
-		sender.sendMessage(WoWParty.TAG + ChatColor.GREEN + msg);
+		sender.sendMessage(LeParty.TAG + ChatColor.GREEN + msg);
 	}
 	
 	private void  info(CommandSender sender, String msg) {
-		sender.sendMessage(WoWParty.TAG + ChatColor.YELLOW + msg);
+		sender.sendMessage(LeParty.TAG + ChatColor.YELLOW + msg);
 	}
 	
 	private void  error(CommandSender sender, String msg) {
-		sender.sendMessage(WoWParty.TAG + ChatColor.RED + msg);
+		sender.sendMessage(LeParty.TAG + ChatColor.RED + msg);
 	}
 }

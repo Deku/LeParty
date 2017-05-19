@@ -1,10 +1,10 @@
-name: WoWParty
+name: LeParty
 version: 1.0.2
 description: A party manager
 
 author: Deku
-website: http://www.github.com/Deku
-main: cl.josedev.WoWParty.WoWParty
+website: http://deku.github.io
+main: cl.josedev.LeParty.LeParty
 
 commands:
     party:

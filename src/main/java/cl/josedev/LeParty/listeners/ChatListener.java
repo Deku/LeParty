@@ -1,4 +1,4 @@
-package cl.josedev.WoWParty.listeners;
+package cl.josedev.LeParty.listeners;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -6,14 +6,14 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import cl.josedev.WoWParty.Party;
-import cl.josedev.WoWParty.WoWParty;
+import cl.josedev.LeParty.Party;
+import cl.josedev.LeParty.LeParty;
 
 public class ChatListener implements Listener {
 
-	private WoWParty plugin;
+	private LeParty plugin;
 	
-	public ChatListener(WoWParty instance) {
+	public ChatListener(LeParty instance) {
 		this.plugin = instance;
 	}
 	

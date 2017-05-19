@@ -1,4 +1,4 @@
-package cl.josedev.WoWParty;
+package cl.josedev.LeParty;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -100,10 +100,10 @@ public class PartyManager {
 	public void togglePartyChat(Player player) {
 		if (partyChat.contains(player.getUniqueId())) {
 			partyChat.remove(player.getUniqueId());
-			player.sendMessage(WoWParty.TAG + ChatColor.RED + "Chat de grupo desactivado");
+			player.sendMessage(LeParty.TAG + ChatColor.RED + "Chat de grupo desactivado");
 		} else {
 			partyChat.add(player.getUniqueId());
-			player.sendMessage(WoWParty.TAG + ChatColor.GREEN + "Chat de grupo activado");
+			player.sendMessage(LeParty.TAG + ChatColor.GREEN + "Chat de grupo activado");
 		}
 	}
 
@@ -120,10 +120,10 @@ public class PartyManager {
 	public void toggleSpyMode(Player player) {
 		if (spyMode.contains(player.getUniqueId())) {
 			spyMode.remove(player.getUniqueId());
-			player.sendMessage(WoWParty.TAG + ChatColor.RED + "Modo de espía desactivado");
+			player.sendMessage(LeParty.TAG + ChatColor.RED + "Modo de espía desactivado");
 		} else {
 			spyMode.add(player.getUniqueId());
-			player.sendMessage(WoWParty.TAG + ChatColor.GREEN + "Modo de espía activado");
+			player.sendMessage(LeParty.TAG + ChatColor.GREEN + "Modo de espía activado");
 		}
 	}
 	
@@ -145,7 +145,7 @@ public class PartyManager {
 				Player p = Bukkit.getServer().getPlayer(id);
 				
 				if (p != null && p.isOnline()) {
-						p.sendMessage(WoWParty.TAG + ChatColor.LIGHT_PURPLE + "[" + party.getLeader().getName() + "] " + sender.getName() + ": " + ChatColor.DARK_PURPLE + msg);
+						p.sendMessage(LeParty.TAG + ChatColor.LIGHT_PURPLE + "[" + party.getLeader().getName() + "] " + sender.getName() + ": " + ChatColor.DARK_PURPLE + msg);
 				}
 			}
 		}
